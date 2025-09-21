@@ -37,7 +37,7 @@
     ignore_errors: yes
   
   - name : Build the docker image
-    command : sudo docker build -t chikara123/insurance-prj:v1.0 /home/devops/
+    command : sudo docker build -t chikara123/insurance-prj:v1.0 /home/devops/insureme/
 
   - name: Deploy Docker Container
     command : sudo docker run -d --name my-insurance-app-container -p 8082:8081 chikara123/insurance-prj:v1.0
