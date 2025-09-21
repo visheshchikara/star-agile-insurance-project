@@ -8,13 +8,28 @@
 
   - name : Install Docker
     command : sudo apt-get install -y docker.io
-    become : yes
-    become_user : root
 
   - name : Start Docker Service
     command : sudo systemctl start docker
-    become : yes
-    become_user : root
+
+  - name: Copy application code to remote
+    copy:
+      src: /home/devops/workspace/insureme/   # Path on Jenkins/Ansible control node
+      dest: /home/devops/                    # Path on target machine
+      owner: devops
+      group: devops
+      mode: '0755'
+      
+  - name : Stop old container
+    command : sudo docker stop my-insurance-app-container
+    ignore_errors: yes
+
+  - name : Remove old containers
+    command : sudo docker rm my-insurance-app-container
+    ignore_errors: yes
+  
+  - name : Build the docker image
+    command : sudo docker build -t chikara123/insurance-prj:v1.0 /home/devops/
 
   - name: Deploy Docker Container
-    command: docker run -itd -p 8084:8081 shubhamkushwah123/insure-me:3.0
+    command : sudo docker run -d --name my-insurance-app-container -p 8082:8081 chikara123/insurance-prj:v1.0
