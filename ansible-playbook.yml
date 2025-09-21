@@ -23,7 +23,7 @@
   - name: Copy application code to remote
     copy:
       src: /home/devops/workspace/insureme/   # Path on Jenkins/Ansible control node
-      dest: /home/devops/                    # Path on target machine
+      dest: /home/devops/insureme                    # Path on target machine
       owner: devops
       group: devops
       mode: '0755'
